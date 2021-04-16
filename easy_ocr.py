@@ -42,8 +42,8 @@ def image_sharp(image, imgName):
 
 def Easy_OCR_On_Image(img, threshold, imgName,labelName):
 	image_scaled = image_scale(img)
-	image_sharpened = image_sharp(image_scaled, imgName)
-	img_rotate_180 = cv2.rotate(image_sharpened, cv2.ROTATE_180)
+	image_sharpened = image_sharp(img, imgName)
+	img_rotate_180 = cv2.rotate(img, cv2.ROTATE_180)
 
 	print("[INFO] OCR'ing input image...")
 	reader = Reader(['da'], gpu=False)

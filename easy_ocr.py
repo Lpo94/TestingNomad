@@ -47,8 +47,11 @@ def Easy_OCR_On_Image(img, threshold, imgName,labelName):
 
 	print("[INFO] OCR'ing input image...")
 	reader = Reader(['da'], gpu=False)
+	print("READER DONE")
 	results = reader.readtext(image_sharpened)
+	print("RESULTS DONE")
 	results1 = reader.readtext(img_rotate_180)
+	print("RESULTS1 DONE")
 	# loop over the results
 
 	wordsInImg = []

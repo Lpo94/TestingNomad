@@ -14,6 +14,32 @@ import re
 from skimage.filters import unsharp_mask
 
 
+
+def image_scale(image):
+	scale = 1
+	# load the input image from disk
+	h, w, c = image.shape
+
+	if (h > w):
+		scale = 1920 / h
+	else:
+		scale = 1920 / w
+
+	scale_percent = scale * 100  # percent of original size
+	width = int(w * scale_percent / 100)
+	height = int(h * scale_percent / 100)
+	dim = (width, height)
+
+	image = cv2.resize(image, dim)
+	return image
+
+def image_sharp(image, imgName):
+	image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+	image = unsharp_mask(image, radius=6.8, amount=2.69)
+	cv2.imwrite("images/{}dub.png".format(imgName), 255 * image)
+	image = cv2.imread("images/{}dub.png".format(imgName))
+	return image
+
 def Easy_OCR_On_Image(img, threshold, imgName,labelName):
 	image_scaled = image_scale(img)
 	image_sharpened = image_sharp(image_scaled, imgName)
@@ -200,33 +226,6 @@ except:
 
 
 ########################### TEMPLATE ENDS ####################################
-
-
-
-def image_scale(image):
-	scale = 1
-	# load the input image from disk
-	h, w, c = image.shape
-
-	if (h > w):
-		scale = 1920 / h
-	else:
-		scale = 1920 / w
-
-	scale_percent = scale * 100  # percent of original size
-	width = int(w * scale_percent / 100)
-	height = int(h * scale_percent / 100)
-	dim = (width, height)
-
-	image = cv2.resize(image, dim)
-	return image
-
-def image_sharp(image, imgName):
-	image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-	image = unsharp_mask(image, radius=6.8, amount=2.69)
-	cv2.imwrite("images/{}dub.png".format(imgName), 255 * image)
-	image = cv2.imread("images/{}dub.png".format(imgName))
-	return image
 
 # def Easy_OCR_On_Document(img, threshold, imgName, labelName):
 # 	# pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files (x86)\\Tesseract-OCR\\tesseract.exe'
